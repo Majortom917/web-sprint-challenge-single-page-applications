@@ -9,7 +9,7 @@ export default function PizzaArchetype(props){
         chicken,
         mushroom,
         textarea,
-    } = props;
+    } = props.confirmedOrders;
 
     return(
         <div>

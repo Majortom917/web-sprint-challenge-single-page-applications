@@ -18,7 +18,7 @@ export default function Form({
         event.preventDefault();
         submit();
     }
-    }
+    
     return(
         <form onSubmit = {onSubmit}>
             <label htmfor = 'name'>
@@ -93,12 +93,13 @@ export default function Form({
             <label htmlFor= 'texarea'>
                 Special Instructions:
                 <input
-                    type= 'checkbox'
-                    name= 'texarea'
-                    id= 'texarea'
-                    checked= {values.texarea}
-                    onChange= {onChange}
-                    />
+                    type = 'text'
+                    name = 'textarea'
+                    id = 'textarea'
+                    placeholder = 'Special Instructions'
+                    value = {values.textarea}
+                    onChange = {onChange}
+                />
             </label>
             <button>Order !</button>
             <div className= 'errors'>

@@ -3,7 +3,8 @@ import{Link, Route} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './schema/schema'
 import Home from './components/HomePage'
-import Form from './components/PizzaFrom'
+import Form from './components/PizzaForm'
+import PizzaArchetype from './components/PizzaArchetype'
 
 const formInitialValue = {
   name: '',
@@ -30,15 +31,40 @@ const App = () => {
   const [pizza, setPizza] = useState(pizzaInitialValue)
   const [formErrors, setFormErrors] = useState(initialFromErrors)
 
+  const pizzaOnChange = (name, value)=>{
+    setFormValue({...formValue, [name]: value})
+  }
 
+  const pizzaSubmit = ()=>{
+    setPizza([...pizza, formValue])
+    setFormValue(formInitialValue)
+  }
 
+  const inputChange = (name, value)=>{
+    yup
+      .reach(formSchema, name)
+      .validate(value)
 
+      .then((valid) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
+        });
+      })
 
+      .catch((err) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0],
+        });
+      });
 
-
-
-
-
+      setFormValue({
+        ...formValue,
+        [name]: value,
+      });
+    };
+  
 
   return (
 
@@ -53,6 +79,18 @@ const App = () => {
       </Route>
 
       <Route path = '/pizza'>
+        <Form
+         values={formValue}
+         update={pizzaOnChange}
+         submit={pizzaSubmit}
+         errors={formErrors}
+         inputChange={inputChange}
+       />
+       {pizza.map((order) => (
+          <PizzaArchetype confirmedOrders={order} key={order.name} />
+        ))}
+
+
 
       </Route>
 
