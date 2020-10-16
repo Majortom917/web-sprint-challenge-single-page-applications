@@ -29,10 +29,7 @@ const formSchema = yup.object().shape({
 
     textarea: yup
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .required("Instructions?"),
-
-
+    
 });
 
 export default formSchema;

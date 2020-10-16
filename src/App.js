@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import{Link, Route} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './schema/schema'
@@ -16,7 +16,7 @@ const formInitialValue = {
   textarea: '',
 
 }
-
+const initialDisabled = false;
 
 const initialFromErrors ={
   name: '',
@@ -30,6 +30,7 @@ const App = () => {
   const [formValue, setFormValue] = useState(formInitialValue)
   const [pizza, setPizza] = useState(pizzaInitialValue)
   const [formErrors, setFormErrors] = useState(initialFromErrors)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
   const pizzaOnChange = (name, value)=>{
     setFormValue({...formValue, [name]: value})
@@ -64,6 +65,12 @@ const App = () => {
         [name]: value,
       });
     };
+    useEffect(() => {
+      formSchema.isValid(formValue).then((valid) => {
+       setDisabled(!valid);
+      
+      });
+    }, [formValue]);
   
 
   return (
@@ -83,6 +90,7 @@ const App = () => {
          values={formValue}
          update={pizzaOnChange}
          submit={pizzaSubmit}
+         disabled={disabled}
          errors={formErrors}
          inputChange={inputChange}
        />

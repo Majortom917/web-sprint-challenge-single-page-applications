@@ -6,7 +6,8 @@ export default function Form({
     update,
     submit,
     errors,
-    inputChange
+    inputChange,
+    disabled
 }){
     const onChange = (event)=>{
         const {name, value,checked, type}= event.target
@@ -101,7 +102,7 @@ export default function Form({
                     onChange = {onChange}
                 />
             </label>
-            <button>Order !</button>
+            <button id = 'order' type = 'submit' disabled = {disabled}>Order !</button>
             <div className= 'errors'>
                 <div>{errors.name}</div>
                 <div>{errors.size}</div>
